@@ -1,0 +1,6 @@
+flask
+pandas
+openpyxl
+xlrd==2.0.1
+xlwt
+python-dotenv

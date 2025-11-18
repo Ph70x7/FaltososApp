@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Aluno {{ idx+1 }} / {{ total }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #007bff;
+      --secondary-blue: #00a2ff;
+      --light-blue: #e9f2ff;
+      --bg: #f8fbff;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: "Inter", sans-serif;
+      color: var(--text-dark);
+      margin: 0;
+      padding: 60px 40px;
+    }
+
+    .main-box {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 10px 40px rgba(0, 123, 255, 0.08);
+      padding: 50px 60px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h3 {
+      font-weight: 600;
+      color: var(--primary-blue);
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    h4 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 40px;
+    }
+
+    /* ===== TABELA DE INFORMAÇÕES ===== */
+    .student-info table {
+      border-color: #eef3ff !important;
+      font-size: 0.95rem;
+      width: 100%;
+      table-layout: fixed; /* evita colunas desajustadas */
+    }
+
+    .student-info td {
+      padding: 8px 12px;
+      vertical-align: middle;
+    }
+
+    td.kv {
+      font-weight: 600;
+      color: var(--primary-blue);
+      width: 30%;
+    }
+
+    td.value {
+      color: var(--text-dark);
+      width: 70%;
+      word-wrap: break-word;
+    }
+
+    /* ===== FORMULÁRIOS ===== */
+    textarea.form-control {
+      border-radius: 12px;
+      border: 1px solid #d8e3ff;
+      background: #f9fbff;
+      resize: vertical;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+
+    /* ===== BOTÕES ===== */
+    .btn {
+      border-radius: 10px;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary-blue);
+      color: #fff;
+    }
+
+    .btn-outline-secondary:hover {
+      background: #6c757d;
+      color: #fff;
+    }
+
+    .btn-outline-success:hover {
+      background: #198754;
+      color: #fff;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      border: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-info {
+      background-color: #17a2b8;
+      border: none;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: #e5e9f0;
+      margin: 40px 0;
+    }
+
+    a {
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== POPUP LEMBRETE ===== */
+    .reminder-popup {
+      position: fixed;
+      right: 30px;
+      bottom: 30px;
+      background: #ffffff;
+      border-left: 4px solid var(--primary-blue);
+      padding: 16px 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+      z-index: 9999;
+      max-width: 260px;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      animation: fadeIn 0.8s ease;
+    }
+
+    .reminder-popup strong {
+      color: var(--primary-blue);
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+/* ===== student-info — moderno, fixo, sem hover ===== */
+.col-lg-6.student-info {
+  background: transparent;
+  font-family: "Inter", "SF Pro Display", "Helvetica Neue", system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  line-height: 1.6;
+  padding-left: 24px;
+  border-left: 6px solid var(--primary-blue);
+}
+
+/* ===== tabela ===== */
+.student-info table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ===== linhas ===== */
+.student-info tr {
+  border-bottom: 1px solid #e5e9f0;
+}
+
+.student-info tr:last-child {
+  border-bottom: none;
+}
+
+/* ===== chaves (títulos) ===== */
+.student-info td.kv {
+  font-weight: 700;                  /* mais peso */
+  color: #0f172a;                   /* azul-acinzentado escuro */
+  width: 32%;
+  padding: 10px 14px 10px 0;
+  letter-spacing: 0.25px;
+  text-transform: uppercase;         /* reforça a ideia de título */
+  font-size: 0.8rem;
+  border-right: 2px solid #e5e9f0;   /* separa visualmente da coluna de valor */
+}
+
+/* ===== valores ===== */
+.student-info td.value {
+  font-weight: 500;
+  color: #111827;
+  width: 68%;
+  padding: 10px 0 10px 16px;
+}
+
+/* ===== responsividade ===== */
+@media (max-width: 768px) {
+  .student-info td.kv {
+    width: 40%;
+    font-size: 0.75rem;
+  }
+  .student-info td.value {
+    width: 60%;
+    font-size: 0.9rem;
+  }
+  .col-lg-6.student-info {
+    border-left-width: 5px;
+    padding-left: 18px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="main-box">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div>
+        <h3>Aluno {{ idx+1 }} de {{ total }}</h3>
+        <h4>{{ student_name }}</h4>
+      </div>
+      <div class="text-end text-muted small">
+        <span>Última atualização: {{ last_update or 'agora' }}</span>
+      </div>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-lg-6 student-info">
+        <table class="table table-borderless align-middle">
+          <tbody>
+            {% set column_map = {
+              0: "Matrícula",
+              1: "Nome",
+              3: "Responsável",
+              4: "Falta",
+              5: "Aula",
+              6: "Oculta",
+              7: "Observação",
+              8: "Telefone",
+              9: "Contato",
+              10: "Oculta",
+              11: "Oculta",
+              12: "Modalidade"
+            } %}
+
+            {% set visible_columns = ['matrícula', 'responsável', 'falta', 'aula', 'observação', 'telefone', 'contato', 'modalidade'] %}
+            
+            {% for k, v in student_row.items() %}
+              {% if k in column_map %}
+                {% set column_name = column_map[k]|lower %}
+                {% if column_name in visible_columns %}
+                  <tr>
+                    <td class="kv">{{ column_map[k] }}</td>
+                    <td class="value">{{ v }}</td>
+                  </tr>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-lg-6">
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">Observação (coluna H)</label>
+            <textarea name="obs_text" class="form-control" rows="5">{{ observation }}</textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label mb-2">Predefinições rápidas:</label><br>
+            <button name="preset" value="Aluno esteve presente realizando atividades práticas" class="btn btn-outline-primary btn-sm mb-2">Aluno esteve presente realizando atividades práticas</button>
+            <button name="preset" value="Aluno sem Material" class="btn btn-outline-secondary btn-sm mb-2">Aluno sem Material</button>
+            <button name="preset" value="Aluno Diferenciado" class="btn btn-outline-success btn-sm mb-2">Aluno Diferenciado</button>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2">
+            <button name="action" value="prev" class="btn btn-secondary">« Voltar</button>
+            <button name="action" value="save" class="btn btn-info">Salvar</button>
+            <button name="action" value="next" class="btn btn-primary">Avançar »</button>
+            <button name="action" value="download" class="btn btn-success ms-auto">Baixar planilha preenchida</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <hr>
+    <a href="{{ url_for('index') }}">← Voltar à tela inicial</a>
+  </div>
+
+  <div class="reminder-popup">
+    <strong>Lembrete</strong>
+    • Hub<br>
+    • Planilha de presentes<br>
+    • WhatsApp
+  </div>
+</body>
+</html>
